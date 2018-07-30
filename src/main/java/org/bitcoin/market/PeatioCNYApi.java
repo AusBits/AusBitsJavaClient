@@ -23,15 +23,15 @@ import java.text.ParseException;
 import java.util.*;
 
 
-public class PeatioCNYApi extends AbstractMarketApi {
-    private static final Logger LOG = LoggerFactory.getLogger(PeatioCNYApi.class);
+public class ausbitsAUDApi extends AbstractMarketApi {
+    private static final Logger LOG = LoggerFactory.getLogger(ausbitsAUDApi.class);
 
-    private static final String PEATIO_URL = "https://peatio.com";
+    private static final String AUSBITS_URL = "https://ausbits.com.au";
     private static final long DURATION = 1000;
     private static final int TIME_OUT = 15000;
 
-    public PeatioCNYApi() {
-        super(org.bitcoin.market.bean.Currency.CNY, Market.PeatioCNY);
+    public ausbitsAUDApi() {
+        super(org.bitcoin.market.bean.Currency.AUD, Market.ausbitsAUD);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
     @Override
     public Long buy(AppAccount appAccount, double amount, double price, SymbolPair symbolPair, OrderType orderType) {
 
-        price = FiatConverter.toCNY(price);
+        price = FiatConverter.toAUD(price);
         TreeMap<String, String> params = new TreeMap<String, String>();
         params.put("side", "buy");
         JSONObject response = trade(appAccount, amount, price, params, symbolPair, orderType);
@@ -54,7 +54,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
 
     @Override
     public Long sell(AppAccount appAccount, double amount, double price, SymbolPair symbolPair, OrderType orderType) {
-        price = FiatConverter.toCNY(price);
+        price = FiatConverter.toAUD(price);
         TreeMap<String, String> params = new TreeMap<String, String>();
         params.put("side", "sell");
         JSONObject response = trade(appAccount, amount, price, params, symbolPair, orderType);
@@ -66,7 +66,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
 
     private JSONObject trade(AppAccount appAccount, Double amount, Double price, TreeMap<String, String> params, SymbolPair symbolPair, OrderType orderType) {
         /*if (AppConfig.isDebug()) { todo
-            LOG.info("AppConfig is debug,can't trade at peatio");
+            LOG.info("AppConfig is debug,can't trade at ausbits");
             return new JSONObject();
         }*/
 
@@ -81,12 +81,12 @@ public class PeatioCNYApi extends AbstractMarketApi {
 
         params.put("volume", amount.toString());
         params.put("price", price.toString());
-        params.put("market", getSymbolPairDescFromUsd2Cny(symbolPair));
+        params.put("market", getSymbolPairDescFromUsd2Aud(symbolPair));
         params.put("canonical_verb", "POST");
         params.put("canonical_uri", "/api/v2/orders");
         JSONObject response = send_request(appAccount, params, TIME_OUT, false);
         if (response.containsKey("error")) {
-            throw new TradeException(MarketErrorCode.getForPeatioCNY(response));
+            throw new TradeException(MarketErrorCode.getForausbitsAUD(response));
         }
         return response;
     }
@@ -94,7 +94,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
     @Override
     public void cancel(AppAccount appAccount, Long orderId, SymbolPair symbolPair) {
         /*if (AppConfig.isDebug()) { todo
-                    LOG.info("AppConfig is debug,can't cancel at peatio");
+                    LOG.info("AppConfig is debug,can't cancel at ausbits");
 
             return;
         }*/
@@ -106,15 +106,15 @@ public class PeatioCNYApi extends AbstractMarketApi {
 
         JSONObject response = send_request(appAccount, params, TIME_OUT, true);
         if (response.containsKey("error")) {
-            throw new TradeException(MarketErrorCode.getForPeatioCNY(response));
+            throw new TradeException(MarketErrorCode.getForausbitsAUD(response));
         }
     }
 
-    private String getSymbolPairDescFromUsd2Cny(SymbolPair symbolPair) {
+    private String getSymbolPairDescFromUsd2Aud(SymbolPair symbolPair) {
         if (symbolPair.getSecond().isUsd()) {
-            SymbolPair symbolPair1 = new SymbolPair(symbolPair.getFirst(), Symbol.cny);
+            SymbolPair symbolPair1 = new SymbolPair(symbolPair.getFirst(), Symbol.aud);
             return symbolPair1.getDesc(false);
-        } else if (symbolPair.getSecond().isCny()) {
+        } else if (symbolPair.getSecond().isAud()) {
             return symbolPair.getDesc(false);
         }
         throw new RuntimeException("symbolPair not contain usd " + symbolPair.getDesc(false));
@@ -167,11 +167,11 @@ public class PeatioCNYApi extends AbstractMarketApi {
                 asset.setAvailableBtc(balance.getDouble("balance"));
                 asset.setFrozenBtc(balance.getDouble("locked"));
             }
-            if (currency1.equals("cny")) {
-                asset.setAvailableCny(balance.getDouble("balance"));
-                asset.setAvailableUsd(FiatConverter.toUsd(asset.getAvailableCny()));
-                asset.setFrozenCny(balance.getDouble("locked"));
-                asset.setFrozenUsd(FiatConverter.toUsd(asset.getFrozenCny()));
+            if (currency1.equals("aud")) {
+                asset.setAvailableAud(balance.getDouble("balance"));
+                asset.setAvailableUsd(FiatConverter.toUsd(asset.getAvailableAud()));
+                asset.setFrozenAud(balance.getDouble("locked"));
+                asset.setFrozenUsd(FiatConverter.toUsd(asset.getFrozenAud()));
             }
         }
         return asset;
@@ -193,7 +193,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
         TreeMap<String, String> params = new TreeMap<String, String>();
         params.put("canonical_verb", "GET");
         params.put("canonical_uri", "/api/v2/orders");
-        params.put("market", getSymbolPairDescFromUsd2Cny(new SymbolPair(Symbol.btc, Symbol.cny)));
+        params.put("market", getSymbolPairDescFromUsd2Aud(new SymbolPair(Symbol.btc, Symbol.aud)));
         params.put("limit", "100");
         List<BitOrder> orders = new ArrayList<BitOrder>();
         JSONArray ordersResponse = send_requests(appAccount, params, TIME_OUT, true);
@@ -209,10 +209,10 @@ public class PeatioCNYApi extends AbstractMarketApi {
         BitOrder bitOrder = new BitOrder();
         bitOrder.setOrderId(jsonObject.getLong("id"));
         bitOrder.setOrderAmount(jsonObject.getDouble("volume"));
-        bitOrder.setOrderCnyPrice(jsonObject.getDouble("price"));
-        bitOrder.setOrderPrice(FiatConverter.toUsd(bitOrder.getOrderCnyPrice()));
+        bitOrder.setOrderAudPrice(jsonObject.getDouble("price"));
+        bitOrder.setOrderPrice(FiatConverter.toUsd(bitOrder.getOrderAudPrice()));
         bitOrder.setProcessedAmount(jsonObject.getDouble("executed_volume"));
-        bitOrder.setProcessedCnyPrice(jsonObject.getDouble("avg_price"));
+        bitOrder.setProcessedAudPrice(jsonObject.getDouble("avg_price"));
         bitOrder.setProcessedPrice(FiatConverter.toUsd(jsonObject.getDouble("avg_price")));
         bitOrder.setFee(getTransactionFee());
         String orderStatusStr = jsonObject.getString("state");
@@ -282,7 +282,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
         Document doc;
         String response = null;
         try {
-            String url = PEATIO_URL + canonical_uri;
+            String url = AUSBITS_URL + canonical_uri;
             Connection connection = HttpUtils.getConnectionForPost(url, params).timeout(timeout).ignoreContentType(true);
             connection.ignoreHttpErrors(true);
             if ("post".equalsIgnoreCase(canonical_verb)) {
@@ -308,7 +308,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
             throw new RuntimeException("send_request response is null");
         }
         if (isThrow && response.containsKey("error")) {
-            throw new RuntimeException("send_request:" + MarketErrorCode.getForPeatioCNY(response));
+            throw new RuntimeException("send_request:" + MarketErrorCode.getForausbitsAUD(response));
         }
         return response;
     }
@@ -328,7 +328,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
 
     @Override
     public Double ticker(SymbolPair symbol) throws IOException {
-        String ticker_url = PEATIO_URL + "/api/v2/tickers/" + getSymbolPairDescFromUsd2Cny(symbol);
+        String ticker_url = AUSBITS_URL + "/api/v2/tickers/" + getSymbolPairDescFromUsd2Aud(symbol);
         String text = HttpUtils.getContentForGet(ticker_url, 5000);
         JSONObject jsonObject = JSONArray.parseObject(text);
         JSONObject ticker = jsonObject.getJSONObject("ticker");
@@ -347,7 +347,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
     }
 
     private JSONObject get_json(SymbolPair symbolPair) {
-        String url = PEATIO_URL + "/api/v2/order_book?market=" + getSymbolPairDescFromUsd2Cny(symbolPair) +
+        String url = AUSBITS_URL + "/api/v2/order_book?market=" + getSymbolPairDescFromUsd2Aud(symbolPair) +
                 "&asks_limit=100&bids_limit=100";
 
         JSONObject data = new JSONObject();
@@ -439,7 +439,7 @@ public class PeatioCNYApi extends AbstractMarketApi {
     }
 
     private String getKlineUrl(Symbol symbol, int period) {
-        return PEATIO_URL + "/api/v2/k?market=" + getSymbolPairDescFromUsd2Cny(new SymbolPair(symbol, Symbol.cny))
+        return AUSBITS_URL + "/api/v2/k?market=" + getSymbolPairDescFromUsd2Aud(new SymbolPair(symbol, Symbol.aud))
                 + "&period=" + period + "&limit=100";
     }
 

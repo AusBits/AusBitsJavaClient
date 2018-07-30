@@ -73,7 +73,7 @@ public enum MarketErrorCode {
     public abstract boolean isRepeat();
 
 
-    public static MarketErrorCode getForPeatioCNY(JSONObject response) {
+    public static MarketErrorCode getForausbitsAUD(JSONObject response) {
         JSONObject error = response.getJSONObject("error");
         int code = error.getInteger("code");
         String msg = error.getString("message");

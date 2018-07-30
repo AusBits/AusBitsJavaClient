@@ -43,7 +43,7 @@ public class BitOrder {
 
     private Long appAccountId;
 
-    private Double orderCnyPrice = 0.0;
+    private Double orderAudPrice = 0.0;
 
     private Double orderAmount = 0.0;
 
@@ -53,7 +53,7 @@ public class BitOrder {
 
     private Double fee = 0.0;
     private Double processedPrice = 0.0;
-    private Double processedCnyPrice = 0.0;
+    private Double processedAudPrice = 0.0;
     private Double processedAmount = 0.0;
     private OrderSide orderSide;
     private OrderStatus status = OrderStatus.none;
@@ -100,20 +100,20 @@ public class BitOrder {
         this.orderPrice = DoubleUtils.toFourDecimal(orderPrice);
     }
 
-    public Double getOrderCnyPrice() {
-        return orderCnyPrice;
+    public Double getOrderAudPrice() {
+        return orderAudPrice;
     }
 
-    public void setOrderCnyPrice(Double orderCnyPrice) {
-        this.orderCnyPrice = DoubleUtils.toFourDecimal(orderCnyPrice);
+    public void setOrderAudPrice(Double orderAudPrice) {
+        this.orderAudPrice = DoubleUtils.toFourDecimal(orderAudPrice);
     }
 
-    public Double getProcessedCnyPrice() {
-        return processedCnyPrice;
+    public Double getProcessedAudPrice() {
+        return processedAudPrice;
     }
 
-    public void setProcessedCnyPrice(Double processedCnyPrice) {
-        this.processedCnyPrice = DoubleUtils.toFourDecimal(processedCnyPrice);
+    public void setProcessedAudPrice(Double processedAudPrice) {
+        this.processedAudPrice = DoubleUtils.toFourDecimal(processedAudPrice);
 
     }
 
@@ -253,7 +253,7 @@ public class BitOrder {
                 ", orderId=" + orderId +
                 ", orderPrice=" + orderPrice +
                 ", appAccountId=" + appAccountId +
-                ", orderCnyPrice=" + orderCnyPrice +
+                ", orderAudPrice=" + orderAudPrice +
                 ", orderAmount=" + orderAmount +
                 ", timestamp=" + timestamp +
                 ", datetime=" + datetime +
@@ -261,7 +261,7 @@ public class BitOrder {
                 ", timeoutTime=" + timeoutTime +
                 ", fee=" + fee +
                 ", processedPrice=" + processedPrice +
-                ", processedCnyPrice=" + processedCnyPrice +
+                ", processedAudPrice=" + processedAudPrice +
                 ", processedAmount=" + processedAmount +
                 ", orderSide=" + orderSide +
                 ", status=" + status +

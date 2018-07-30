@@ -15,8 +15,8 @@ public class Asset {
     private Double frozenLtc = 0.0;
     private Double availableUsd = 0.0;
     private Double frozenUsd = 0.0;
-    private Double availableCny = 0.0;
-    private Double frozenCny = 0.0;
+    private Double availableAud = 0.0;
+    private Double frozenAud = 0.0;
 
 
     public Long getId() {
@@ -52,20 +52,20 @@ public class Asset {
         this.frozenBtc = frozenBtc;
     }
 
-    public Double getAvailableCny() {
-        return availableCny;
+    public Double getAvailableAud() {
+        return availableAud;
     }
 
-    public void setAvailableCny(Double availableCny) {
-        this.availableCny = availableCny;
+    public void setAvailableAud(Double availableAud) {
+        this.availableAud = availableAud;
     }
 
-    public Double getFrozenCny() {
-        return frozenCny;
+    public Double getFrozenAud() {
+        return frozenAud;
     }
 
-    public void setFrozenCny(Double frozenCny) {
-        this.frozenCny = frozenCny;
+    public void setFrozenAud(Double frozenAud) {
+        this.frozenAud = frozenAud;
     }
 
     public Double getAvailableUsd() {
@@ -121,8 +121,8 @@ public class Asset {
                 ", frozenLtc=" + frozenLtc +
                 ", availableUsd=" + availableUsd +
                 ", frozenUsd=" + frozenUsd +
-                ", availableCny=" + availableCny +
-                ", frozenCny=" + frozenCny +
+                ", availableAud=" + availableAud +
+                ", frozenAud=" + frozenAud +
                 '}';
     }
 }

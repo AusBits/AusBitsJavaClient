@@ -7,30 +7,30 @@ import java.util.Date;
 
 public class FiatConverter {
     private static final Logger LOG = LoggerFactory.getLogger(FiatConverter.class);
-    private final static double USD2CNY = 6.2;
+    private final static double USD2AUD = 6.2;
 
-    public static double toUsd(Double cny) {
-        return toUsd(cny, new Date());
+    public static double toUsd(Double aud) {
+        return toUsd(aud, new Date());
     }
 
-    public static double toUsd(Double cny, Date date) {
-        if (cny == null || cny == 0.0) {
+    public static double toUsd(Double aud, Date date) {
+        if (aud == null || aud == 0.0) {
             return 0.0;
         }
-        double usd = cny / getRate(date);
+        double usd = aud / getRate(date);
         return DoubleUtils.toFourDecimal(usd);
     }
 
     private static Double getRate(Date date) {
-        return USD2CNY;
+        return USD2AUD;
     }
 
 
-    public static Double toCNY(Double usd) {
+    public static Double toAUD(Double usd) {
         if (usd == null || usd == 0.0) {
             return 0.0;
         }
-        double cny = usd * getRate(new Date());
-        return DoubleUtils.toFourDecimal(cny);
+        double aud = usd * getRate(new Date());
+        return DoubleUtils.toFourDecimal(aud);
     }
 }

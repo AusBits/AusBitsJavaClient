@@ -22,7 +22,7 @@ public enum Symbol {
         }
 
         @Override
-        public boolean isCny() {
+        public boolean isAud() {
             return false;
         }
     }, ltc {
@@ -42,7 +42,7 @@ public enum Symbol {
         }
 
         @Override
-        public boolean isCny() {
+        public boolean isAud() {
             return false;
         }
     }, usd {
@@ -62,10 +62,10 @@ public enum Symbol {
         }
 
         @Override
-        public boolean isCny() {
+        public boolean isAud() {
             return false;
         }
-    }, cny {
+    }, aud {
         @Override
         public boolean isBtc() {
             return false;
@@ -82,7 +82,7 @@ public enum Symbol {
         }
 
         @Override
-        public boolean isCny() {
+        public boolean isAud() {
             return true;
         }
     };
@@ -93,6 +93,6 @@ public enum Symbol {
 
     public abstract boolean isUsd();
 
-    public abstract boolean isCny();
+    public abstract boolean isAud();
 }
 

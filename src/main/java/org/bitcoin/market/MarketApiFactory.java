@@ -22,8 +22,8 @@ public class MarketApiFactory {
     static Map<String, AbstractMarketApi> marketMap = new LinkedHashMap<String, AbstractMarketApi>();
 
     static {
-        AbstractMarketApi peatio = new org.bitcoin.market.PeatioCNYApi();
-        marketMap.put(peatio.getMarket().name(), peatio);
+        AbstractMarketApi ausbits = new org.bitcoin.market.ausbitsAUDApi();
+        marketMap.put(ausbits.getMarket().name(), ausbits);
     }
 
 

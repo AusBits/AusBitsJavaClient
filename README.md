@@ -1,3 +1,3 @@
-peatioJavaClient
+AusbitsJavaClient
 ================
-A simple java client for Crypto Trade Site [Peatio.com](http://peatio.com)
+A simple java client for Digital Assets Exchange [ausbits.com.au](https://ausbits.com.au)

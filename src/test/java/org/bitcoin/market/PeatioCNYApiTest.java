@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class PeatioCNYApiTest {
+public class ausbitsAUDApiTest {
 
     private AppAccount getAppAccount() {
         AppAccount appAccount = new AppAccount();
@@ -24,7 +24,7 @@ public class PeatioCNYApiTest {
 
         Double amount = 0.01;
         Double price = 10.0; // usd
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         Long orderId = market.buy(getAppAccount(), amount, price, new SymbolPair(Symbol.btc, Symbol.usd));
         BitOrder order = market.getOrder(getAppAccount(), orderId, null);
         assertNotNull(order);
@@ -42,7 +42,7 @@ public class PeatioCNYApiTest {
 
         Double amount = 0.01;
         Double price = 10000.0; // usd
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         Long orderId = market.sell(getAppAccount(), amount, price, new SymbolPair(Symbol.btc, Symbol.usd));
         BitOrder order = market.getOrder(getAppAccount(), orderId, null);
         assertNotNull(order);
@@ -57,7 +57,7 @@ public class PeatioCNYApiTest {
 
     @Test
     public void testGetInfo() throws Exception {
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         Asset asset = market.getInfo(getAppAccount());
         assertNotNull(asset);
     }
@@ -65,7 +65,7 @@ public class PeatioCNYApiTest {
     @Test
     public void testGetOrder() throws Exception {
 
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         Long orderId = 434669L;
         BitOrder order = market.getOrder(getAppAccount(), orderId, new SymbolPair(Symbol.btc, Symbol.usd));
         assertNotNull(order);
@@ -74,7 +74,7 @@ public class PeatioCNYApiTest {
     @Test
     public void testGetRunningOrder() throws Exception {
 
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         List<BitOrder> bitOrders = market.getRunningOrders(getAppAccount());
         assertTrue(bitOrders.size() > 0);
     }
@@ -82,7 +82,7 @@ public class PeatioCNYApiTest {
 
     @Test
     public void testGetKlineDate() throws Exception {
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         List<Kline> klines = market.getKlineDate(Symbol.btc);
         for (Kline kline : klines) {
             convertToUsd(market, kline);
@@ -93,7 +93,7 @@ public class PeatioCNYApiTest {
 
     @Test
     public void testGetKline5Min() throws Exception {
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         List<Kline> klines = market.getKline5Min(Symbol.btc);
         for (Kline kline : klines) {
             convertToUsd(market, kline);
@@ -104,7 +104,7 @@ public class PeatioCNYApiTest {
 
     @Test
     public void testGetKline1Min() throws Exception {
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
         List<Kline> klines = market.getKline1Min(Symbol.btc);
         for (Kline kline : klines) {
             convertToUsd(market, kline);
@@ -115,8 +115,8 @@ public class PeatioCNYApiTest {
     @Test
     public void testTicker() throws Exception {
 
-        AbstractMarketApi abstractMarketApi = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
-        double ticker = abstractMarketApi.ticker(new SymbolPair(Symbol.btc, Symbol.cny));
+        AbstractMarketApi abstractMarketApi = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
+        double ticker = abstractMarketApi.ticker(new SymbolPair(Symbol.btc, Symbol.aud));
         assertTrue(ticker > 0.0);
 
     }
@@ -124,8 +124,8 @@ public class PeatioCNYApiTest {
     @Test
     public void testDepth() throws Exception {
 
-        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.PeatioCNY);
-        JSONObject depth = market.get_depth(new SymbolPair(Symbol.btc, Symbol.cny), true);
+        AbstractMarketApi market = MarketApiFactory.getInstance().getMarket(Market.ausbitsAUD);
+        JSONObject depth = market.get_depth(new SymbolPair(Symbol.btc, Symbol.aud), true);
         assertTrue(depth.containsKey("asks"));
         assertTrue(depth.containsKey("bids"));
 

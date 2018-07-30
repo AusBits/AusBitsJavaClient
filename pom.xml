@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.bitcoin</groupId>
-    <artifactId>peatioJavaClient</artifactId>
+    <artifactId>ausbitsJavaClient</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>peatioJavaClient</name>
+    <name>ausbitsJavaClient</name>
     <url>http://maven.apache.org</url>
 
     <properties>

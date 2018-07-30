@@ -22,7 +22,7 @@ import java.util.List;
 public abstract class AbstractMarketApi {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractMarketApi.class);
 
-    private Currency currency = Currency.CNY;
+    private Currency currency = Currency.AUD;
     private static final long MARKET_EXPIRATION_TIME = 120L;
     private static final int MAX_DEPTH_LEN = 300;
 

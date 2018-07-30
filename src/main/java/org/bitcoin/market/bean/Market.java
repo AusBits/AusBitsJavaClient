@@ -8,7 +8,7 @@ import java.util.TimeZone;
 
 public enum Market {
 
-    PeatioCNY {
+    ausbitsAUD {
         @Override
         public boolean isUsd() {
             return false;
@@ -25,4 +25,3 @@ public enum Market {
     public abstract TimeZone getTimeZone();
 
 }
-
